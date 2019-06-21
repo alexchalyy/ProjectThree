@@ -17,6 +17,10 @@
 .App-intro {
   font-size: large;
 }
+.login {
+  background: rgb(52,58,64);
+  height: 100vh;
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

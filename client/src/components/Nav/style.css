@@ -1,10 +1,14 @@
 nav.navbar {
   margin: 0%;
-  float: left;
+  width: 100vw;
+  margin-bottom: 5rem;
   
 }
-header{
-  height: 80px;
-  background-color: #343a40;
+
+header {
+  height: auto;
+  margin-bottom: 3rem;
+  
 }
+
  
