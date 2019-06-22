@@ -6,10 +6,8 @@ import { Link, Redirect } from "react-router-dom";
 import React, { Component } from "react";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Button } from 'reactstrap';
-import {register} from '../components/UserFunction';
- 
-// const User = require('../models/User');
-// const Users= require( "../routes/users");
+import "../Register.css"
+// import Users from "./routes/users";
 class Register extends Component {
 
     state = {
@@ -34,7 +32,6 @@ class Register extends Component {
         })
     }
     handleInputChange = event => {
-        
         const { name, value } = event.target;
         this.setState({
             [name]: value
@@ -42,148 +39,175 @@ class Register extends Component {
         console.log("value is " + value);
     }
 
+
+
+
     renderRedirect = () => {
         console.log("redirect works!");
         if (this.state.redirect) {
             return <Redirect to='/sale' />
         }
     }
-//add functionality where it send the data to the Database
+
     handleFormSubmit = event => {
         console.log("submit!");
-        console.log("city: " + this.state.city);
-        console.log("state: " + this.state.state);
-        console.log("username: " + this.state.userName);
+        console.log("uername: " + this.state.userName);
         console.log("firstname: " + this.state.firstName);
         console.log("lastname: " + this.state.lastName);
         console.log("email: " + this.state.email);
         console.log("password: " + this.state.password);
-
-        const user ={
-            userName: this.state.userName,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            password: this.state.password,
-            address: this.state.address,
-            city: this.state.city,
-            state: this.state.state,
-            zip: this.state.zip,
-            creditCardNumber: this.state.creditCardNumber,
-            expDate: this.state.expDate,
-            cvv: this.state.cvv
-        }
-        console.log(user);
         if (!this.state.email) {
             console.log("e-mail empty");
         } else {
             this.setRedirect();
             this.renderRedirect();
         }
-        register(user).then(res => {
-            if (res)
-            { this.props.history.push('\login')}
-    
-        })
-    
     }
-    componentDidMount() {
-        console.log("did mount");
-        // User.post("/", (req, res)=>{
-        //     res.send(req.body);
-        //     });
-      }
-
-  
-
-
     render() {
         return (
             <div>
                 <Nav />
                 <p>Registration page</p>
+                
                 <AvForm>
-                <AvField
-                        name="userName"
-                        placeholder="username (required)"
+                <div className="reg-box1">
+                    <Input
+                        name="username"
+                        placeholder="username "
                         value={this.state.userName}
                         onChange={this.handleInputChange}
                     />
-                    <AvField
-                        name="firstName"
-                        placeholder="First Name (required)"
+                    <Input
+                        name="First Name"
+                        placeholder="First Name"
                         value={this.state.firstName}
                         onChange={this.handleInputChange}
                     />
-                    <AvField
-                        name="lastName"
-                        placeholder="Last Name (required)"
+                    <Input
+                        name="Last Name"
+                        placeholder="Last Name"
                         value={this.state.lastName}
                         onChange={this.handleInputChange}
                     />
-                    <AvField
+                    <Input
                         name="email"
-                        placeholder="e-mail (required)"
+                        placeholder="e-mail"
                         value={this.state.email}
                         onChange={this.handleInputChange}
                     />
-                    <AvField
+                    <Input
                         name="password"
-                        placeholder="password (required)"
+                        placeholder="password"
                         value={this.state.password}
                         onChange={this.handleInputChange}
                     />
-                    <AvField
+                    <Input
                         name="confirm password"
-                        placeholder="confirm password (required)"
+                        placeholder="confirm password"
 
                     />
-                    <AvField
+                </div>
+                <div className="reg-box2">
+                    <Input
                         name="address"
-                        placeholder="address (required)"
+                        placeholder="street address"
                         value={this.state.address}
                         onChange={this.handleInputChange}
                     />
-                    <AvField
+                    <Input
                         name="city"
-                        placeholder="city (required)"
+                        placeholder="city"
                         value={this.state.city}
                         onChange={this.handleInputChange}
                     />
-                   <AvField
-                        name="state"
-                        placeholder="State (required)"
+                    {/* <Input
+                        name="State"
+                        placeholder="State"
                         value={this.state.state}
                         onChange={this.handleInputChange}
-                    />
-                    <AvField
-                        name="zip"
-                        placeholder="Zip code (required)"
+                    /> */}
+                     <AvField type="select" name="state" onChange={this.handleInputChange} value={this.state.state}>
+                        <option value="">State</option>
+                        <option value="Alaska">AK</option>
+                        <option value="Alabama">AL</option>
+                        <option value="Arkansas">AR</option>
+                        <option value="Arizona">AZ</option>
+                        <option value="California">CA</option>
+                        <option value="Colorado">CO</option>
+                        <option value="Connecticut">CT</option>
+                        <option value="Delaware">DE</option>
+                        <option value="Florida">FL</option>
+                        <option value="Georgia">GA</option>
+                        <option value="Hawaii">HI</option>
+                        <option value="Iowa">IA</option>
+                        <option value="Idaho">ID</option>
+                        <option value="Illinios">IL</option>
+                        <option value="Indiana">IN</option>
+                        <option value="Kansas">KS</option>
+                        <option value="Kentucky">KY</option>
+                        <option value="Lousiana">LA</option>
+                        <option value="Massachusetts">MA</option>
+                        <option value="Maryland">MD</option>
+                        <option value="Maine">ME</option>
+                        <option value="Michigan">MI</option>
+                        <option value="Minnesota">MN</option>
+                        <option value="Missouri">MO</option>
+                        <option value="Mississippi">MS</option>
+                        <option value="Montana">MT</option>
+                        <option value="North Carolina">NC</option>
+                        <option value="North Dakota">ND</option>
+                        <option value="Nebraska">NE</option>
+                        <option value="New Hampshire">NH</option>
+                        <option value="New Jersey">NJ</option>
+                        <option value="New Mexico">NM</option>
+                        <option value="Nevada">NV</option>
+                        <option value="New York">NY</option>
+                        <option value="Ohio">OH</option>
+                        <option value="Oklahoma">OK</option>
+                        <option value="Oregon">OR</option>
+                        <option value="Pennsylvania">PA</option>
+                        <option value="Rhode Island">RI</option>
+                        <option value="South Carolina">SC</option>
+                        <option value="South Dakota">SD</option>
+                        <option value="Tennessee">TN</option>
+                        <option value="Texas">TX</option>
+                        <option value="Utah">UT</option>
+                        <option value="Virginia">VA</option>
+                        <option value="Vermont">VT</option>
+                        <option value="Washington">WA</option>
+                        <option value="Wisconsin">WI</option>
+                        <option value="West Virginia">WV</option>
+                        <option value="Wyoming">WY</option>
+                    </AvField>
+                    <Input
+                        name="Zip code"
+                        placeholder="Zip code"
                         value={this.state.zip}
                         onChange={this.handleInputChange}
                     />
-                    <AvField
-                        name="creditCardNumber"
-                        placeholder="Credit Card Number (required)"
+                    <Input
+                        name="Credit card number"
+                        placeholder="Credit Card Number"
                         value={this.state.creditCardNumber}
                         onChange={this.handleInputChange}
                     />
-                    <AvField
-                        name="expDate"
-                        placeholder="Expiration Date (required)"
+                    <Input
+                        name="Expiration Date"
+                        placeholder="Expiration Date"
                         value={this.state.expDate}
                         onChange={this.handleInputChange}
                     />
-                   <AvField
+                    <Input
                         name="cvv"
-                        placeholder="cvv (required)"
+                        placeholder="cvv"
                         value={this.state.cvv}
                         onChange={this.handleInputChange}
                     />
-
-                    <Button color="secondary" onClick={this.handleFormSubmit}>Submit</Button>
+                </div>
+                
+                    <Button className="submit-btn" color="secondary" onClick={this.handleFormSubmit}>Submit</Button>
                 </AvForm>
-                <Link to='/sale'>Sale Page</Link>
+                {/* <Link to='/sale'>Sale Page</Link> */}
             </div>
         );
     }

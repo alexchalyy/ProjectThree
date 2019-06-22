@@ -1,0 +1,22 @@
+.reg-box1 {
+    display: block;
+    float: left;
+    width: 40%;
+    margin: 2rem;
+
+}
+
+.reg-box2 {
+    display: block;
+    float: left;
+    width: 40%;
+    margin: 2rem;
+}
+
+.submit-btn {
+    content: "";
+    clear: both;
+    display: table;
+    margin: 0 auto;
+
+}
