@@ -12,6 +12,8 @@ const morgan = require('morgan');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('./passport');
+const cors = require("cors")
+ 
  
 
  
@@ -25,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // initialize cookie-parser to allow us access the cookies stored in the browser. 
 app.use(cookieParser());
 
-
+app.use(cors());
 console.log("beginning of server");
 
 // Passport

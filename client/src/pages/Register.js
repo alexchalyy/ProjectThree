@@ -38,7 +38,7 @@ class Register extends Component {
     }
     handleFormSubmit(event) {
 		console.log('sign-up handleSubmit, username: ')
-		console.log(this.state.username)
+		console.log(this.state.userName)
         event.preventDefault()
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         var ValidateEmail = re.test(String(this.state.email).toLowerCase());
@@ -51,13 +51,13 @@ class Register extends Component {
         if (this.state.userName && this.state.firstName && this.state.lastName && ValidateEmail && ValidatePassword &&
             this.state.password == this.state.confirm_password && /^[a-zA-Z]+$/.test(this.state.firstName) &&
             /^[a-zA-Z]+$/.test(this.state.lastName)) {
-		axios.post('/api/users', {
+		axios.post('/register', {
             userName: this.state.userName,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
-            password: this.state.password,
-            confirm_password: this.state.confirm_password
+            password: this.state.password
+             
 
 		})
 			.then(response => {

@@ -69,7 +69,7 @@ class Enter extends Component {
         });
         console.log("value is " + value);
         var credentials = [];
-        Axios.get('/api/allusers')
+        Axios.get('/enter')
             .then(function (response) {
                 console.log("inside axios");
                 console.log(response);
