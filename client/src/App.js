@@ -96,6 +96,7 @@ class App extends Component {
           console.log("should redirect to next page!");
           this.setRedirect();
           this.renderRedirect();
+          console.log("after redirect to next page function call.");
         }
       }
       console.log("this is credentials array")
@@ -160,6 +161,25 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/account" component={Account} />
             <Route exact path="/login"
+            render={(props)=> <Enter {...props}
+            redirect={this.redirect}
+            toggle={this.toggle}
+            toggleAll={this.toggleAll}
+            toggleNested={this.toggleNested}
+            email={this.state.email}
+            password={this.state.password}
+            hiddenPassword={this.state.hiddenPassword}
+            redirect={this.state.redirect}
+            credentials={this.state.credentials}
+            modal={this.state.modal}
+            nestedModal={this.state.nestedModal}
+            closeAll={this.state.closeAll}
+            handleFormSubmit={this.handleFormSubmit}
+            handleInputChange={this.handleInputChange}
+            setCredentials={this.setCredentials}
+            componentDidUpdate={this.componentDidUpdate}
+        />}    />
+            {/*                    
               component={Enter}
               component={() => <Enter redirect={this.redirect} />}
               component={() => <Enter toggle={this.toggle} />}
@@ -177,7 +197,7 @@ class App extends Component {
               component={() => <Enter handleInputChange={this.handleInputChange} />}
               component={() => <Enter setCredentials={this.setCredentials} />}
               component={() => <Enter componentDidUpdate={this.componentDidUpdate} />}
-            />
+            />*/}
             <Route exect path="/forgot" component={Forgot} />
             <Route exact path="/sale" component={Sale} />
             <Route exact path="/orders" component={Order} />
