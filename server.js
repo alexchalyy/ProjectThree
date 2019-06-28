@@ -14,9 +14,6 @@ const cookieParser = require('cookie-parser');
 const passport = require('./passport');
 const cors = require("cors")
  
- 
-
- 
 // var app = express();
 // set morgan to log info about our requests for development use.
 app.use(morgan('dev'));
@@ -54,22 +51,7 @@ app.use(session({
   }
 }));
 
-//not sure if this code is needed, chris pick a direction and go there
-// app.use( (req, res, next) => {
-//   console.log('req.session', req.session);
-//   return next();
-// });
 
-// app.post('/user', (req, res) => {
-//   console.log('user signup');
-//   req.session.username = req.body.username;
-//   res.end()
-// })
- 
-
-// Define Routes
-
-// app.use('/user', user) are these the same, sure looks like they are
 
 app.use('/', require('./routes/users'));
 

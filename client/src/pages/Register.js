@@ -62,14 +62,16 @@ class Register extends Component {
 		})
 			.then(response => {
 				console.log(response)
-				if (!response.data.errmsg) {
+				if (!response.data.err) {
                     console.log('successful signup')
                     this.props.history.push('/login');
+                    alert("You have been signed up");
 					// this.setState({ //redirect to login page
 					// 	redirectTo: '/login'
 					// })
 				} else {
-					console.log('username already taken')
+                    console.log('username already taken')
+                    alert("That email already exists");
 				}
 			}).catch(error => {
 				console.log('signup error: ')

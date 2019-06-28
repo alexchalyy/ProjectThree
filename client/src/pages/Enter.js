@@ -20,7 +20,8 @@ class Enter extends Component {
             credentials: [],
             modal: false,
             nestedModal: false,
-            closeAll: false
+            closeAll: false,
+            redirectTo: null
         };
 
         this.toggle = this.toggle.bind(this);
@@ -68,34 +69,7 @@ class Enter extends Component {
             [name]: value
         });
         console.log("value is " + value);
-        var credentials = [];
-        Axios.get('/enter')
-            .then(function (response) {
-                console.log("inside axios");
-                console.log(response);
-                for (var c = 0; c < response.data.length; c++) {
-                    //var cred = [];
-                    credentials.push(response.data[c].email);
-                    // credentials.push(response.data[c].password);
-                    //credentials.push(cred);
-                    /*
-                    if (response.data[c].email == this.state.email && response.data[c].password == user.password) {
-                        console.log("user is in user table!");
-                        console.log("e-mail: " + response.data[c].email);
-                        console.log("password: " + response.data[c].password);
-                        user.match = true;
-                        console.log("user match is " + user.match);
-                    }*/
-                }
 
-
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        this.setCredentials(credentials);
-        console.log("Credentials: ");
-        console.log(this.state.credentials);
     }
 
     renderRedirect = () => {
@@ -106,89 +80,103 @@ class Enter extends Component {
     }
 
 
-  
 
-    handleFormSubmit = event => {
-
-        //var users = []; // array of users (including username and password), is populated every time user clicks log in button for input validation
-
+    handleFormSubmit(event) {
         const user = {
 
             email: this.state.email,
             password: this.state.password,
             match: false
-
         }
-
-        console.log("credentials on hitting submit button");
-        console.log(this.state.credentials);
-        console.log("the first e-mail of credentials");
-        console.log(this.state.credentials[0]);
-        console.log("submit!");
-        console.log("email: " + this.state.email);
-        console.log("password: " + this.state.password);
-        if (!this.ValidateEmail() ) {
-            console.log("incorrect login");
-            //|| !this.state.password
-            //don't check for password, just e-mail
-            // && this.state.password == this.state.credentials[c + 1]
-        } else {
-            for (var c = 0; c < this.state.credentials.length; c = c + 2) {
-                if (this.state.email == this.state.credentials[c]) {
-                    console.log("should redirect to next page!");
-                    this.setRedirect();
-                    this.renderRedirect();
-                }
-            }
-            console.log("b4 toggle");
-            if (!this.state.redirect) {
-                this.toggleNested();
-            }
-            //this.toggleTrue();
-            console.log("after toggle");
-            
-        }
-     
-    }
-
-    ValidateEmail() {
+        console.log('sign-up handleSubmit, username: ')
+        console.log(this.state.password)
+        event.preventDefault()
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var ValidateEmail = re.test(String(this.state.email).toLowerCase());
+        var letter = /^[a-zA-Z0-9]+$/;
+        var ValidatePassword = letter.test(this.state.password); //match a letter _and_ a number
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var ValidateEmail = re.test(String(this.state.email).toLowerCase());
 
-        return re.test(String(this.state.email).toLowerCase());
+        //request to server to add a new username/password
+        if (ValidateEmail && ValidatePassword
+        ) {
+            Axios
+                .post('/enter', {
+                    email: this.state.email,
+                    password: this.state.password
+                })
+                .then(response => {
+                    console.log('login response: ')
+                    console.log(response)
+                    if (response.status === 200) {
+                        // update App.js state
+                        alert("Logged in")
+                        this.props.updateUser({
+                            loggedIn: true,
+                            userName: response.data.userName
+
+                        })
+
+                        // update the state to redirect to home
+                        // this.props.history.push('/sale');
+                        this.setState({
+                            redirectTo: '/sale'
+                        })
+                    }
+                }).catch(err => {
+                    console.log('login error: ')
+                    console.log(err);
+                    alert("not logged in");
+
+                })
+        }
     }
+
+
+    // ValidateEmail() {
+    //     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    //     return re.test(String(this.state.email).toLowerCase());
+    // }
 
     render() {
-        return (
-            <div className="App">
-                <EnterNav />
+        if (this.state.redirectTo) {
+            return <Redirect to={{ pathname: this.state.redirectTo }} />
+        } else {
+            return (
+                <div className="App">
+                    <EnterNav />
 
-                {this.renderRedirect()}
-                <div className='container'>
-                    <AvForm>
-                        <AvField name="email" label="Email" type="email" onChange={this.handleInputChange} validate={{
-                            email: { value: true, errorMessage: 'Please enter valid e-mail' },
-                            required: { value: true, errorMessage: 'Please enter e-mail' }
-                        }} />
-                        <AvField name="password" label="Password" type="text" onChange={this.handleInputChange} validate={{
-                            required: { value: true, errorMessage: 'Please enter password' },
-                            pattern: { value: '^[A-Za-z0-9]+$', errorMessage: 'Your name must be composed only with letter and numbers' },
+                    {this.renderRedirect()}
+                    <div className='container'>
+                        <AvForm>
+                            <AvField name="email" label="Email" type="email" onChange={this.handleInputChange} validate={{
+                                email: { value: true, errorMessage: 'Please enter valid e-mail' },
+                                required: { value: true, errorMessage: 'Please enter e-mail' }
+                            }} />
+                            <AvField name="password" label="Password" type="text" onChange={this.handleInputChange} validate={{
+                                required: { value: true, errorMessage: 'Please enter password' },
+                                pattern: { value: '^[A-Za-z0-9]+$', errorMessage: 'Your name must be composed only with letter and numbers' },
 
-                            maxLength: { value: 16, errorMessage: 'Your name must be between 6 and 16 characters' }
-                        }} />
-                        <Button color="primary" onClick={this.handleFormSubmit}>Submit</Button>
-                    </AvForm>
+                                maxLength: { value: 16, errorMessage: 'Your name must be between 6 and 16 characters' }
+                            }} />
+                            <Button color="primary" onClick={this.handleFormSubmit}>Submit</Button>
+                        </AvForm>
+                    </div>
+                    <div>
+                        <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} onClosed={this.state.closeAll ? this.toggle : undefined}>
+                            <ModalHeader>User not logged in</ModalHeader>
+                            <ModalBody>Please check your email and password</ModalBody>
+                            <ModalFooter>
+                                <Button color="secondary" onClick={this.toggleAll}>Close</Button>
+                            </ModalFooter>
+                        </Modal>
+                    </div>
+
                 </div>
-                <div>
-                    <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} onClosed={this.state.closeAll ? this.toggle : undefined}>
-                        <ModalHeader>User not registered</ModalHeader>
-                        <ModalFooter>
-                            <Button color="secondary" onClick={this.toggleAll}>Close</Button>
-                        </ModalFooter>
-                    </Modal>
-                </div>
-           
-            </div>
-        )
+            )
+        }
     }
 }
 
