@@ -153,13 +153,12 @@ class Account extends Component {
 
     render() {
         return (
-            <div id="reg-body">
+            <div id="account-body">
                 <EditNav />
-                <div className="container">
-
-                    <p id="reg-title">Edit Account Info</p>
+                <div className="account-container">
+                    <p id="account-title">Edit Account Info</p>
                     <AvForm>
-                        <div className="reg-box1">
+                        <div className="account-box1">
                             <AvField
                                 name="userName"
                                 placeholder="username"
@@ -227,7 +226,7 @@ class Account extends Component {
 
                             />
                         </div>
-                        <div className="reg-box2">
+                        <div className="account-box2">
                             <AvField
                                 name="address"
                                 placeholder="address"

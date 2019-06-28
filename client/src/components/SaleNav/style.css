@@ -1,8 +1,30 @@
 nav.navbar {
   margin: 0%;
   float: left;
-  
 }
- 
 
- 
+.sale-nav-link {
+  font-size: 18px;
+  color: #fffefece;
+  padding: 1em 1.5em;
+  text-transform: uppercase;
+}
+
+.sale-nav-img {
+  height: 70px;
+}
+
+.sale-nav-link:hover {
+  color: white;
+}
+
+@media (min-width: 960px) {
+  .sale-nav-link:hover {
+    text-decoration: none;
+    box-shadow: 0 4px 8px 0 rgb(218, 213, 213), 0 6px 20px 0 rgb(218, 213, 213);
+  }
+}
+
+#nav-brand {
+  font-size: 24px;
+}
