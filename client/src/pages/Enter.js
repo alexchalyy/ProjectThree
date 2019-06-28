@@ -63,6 +63,7 @@ class Enter extends Component {
     }
 
     handleInputChange = event => {
+
         const { name, value } = event.target;
         this.setState({
             [name]: value
@@ -74,21 +75,9 @@ class Enter extends Component {
                 console.log("inside axios");
                 console.log(response);
                 for (var c = 0; c < response.data.length; c++) {
-                    //var cred = [];
                     credentials.push(response.data[c].email);
                     credentials.push(response.data[c].password);
-                    //credentials.push(cred);
-                    /*
-                    if (response.data[c].email == this.state.email && response.data[c].password == user.password) {
-                        console.log("user is in user table!");
-                        console.log("e-mail: " + response.data[c].email);
-                        console.log("password: " + response.data[c].password);
-                        user.match = true;
-                        console.log("user match is " + user.match);
-                    }*/
                 }
-
-
             })
             .catch(function (error) {
                 console.log(error);
@@ -104,20 +93,6 @@ class Enter extends Component {
             return <Redirect to='/sale' />
         }
     }
-
-
-    /*
-        handleFormSubmit = event => {
-            console.log("submit!");
-            console.log("email: " + this.state.email);
-            console.log("password: " + this.state.password);
-            if (!this.state.email) {
-                console.log("e-mail empty");
-            } else {
-                this.setRedirect();
-                this.renderRedirect();
-            }
-        } */
 
     handleFormSubmit = event => {
 
@@ -150,6 +125,7 @@ class Enter extends Component {
                     console.log("should redirect to next page!");
                     this.setRedirect();
                     this.renderRedirect();
+                    this.props.user = this.state
                 }
             }
             console.log("this is credentials array")
@@ -159,95 +135,14 @@ class Enter extends Component {
             if (!this.state.redirect) {
                 this.toggleNested();
             }
-            //this.toggleTrue();
             console.log("after toggle");
-            /*
-            for (var c = 0; c < this.state.credentials.length; c++) {
-                if (this.state.email == this.state.credentials[c].cred[0] && 
-            }*/
-            /*
-                        Axios.get('/api/allusers')
-                        .then(function(response)    {
-                            console.log(response);
-                            for (var c = 0; c < response.data.length; c++)  {
-                                if (response.data[c].email == user.email && response.data[c].password == user.password) {
-                                    console.log("user is in user table!");
-                                    console.log("e-mail: " + response.data[c].email);
-                                    console.log("password: " + response.data[c].password);
-                                    user.match = true;
-                                    console.log("user match is " + user.match);
-                                }
-                            }
-                        })
-                        .catch(function(error)  {
-                            console.log(error);
-                        });
-                        console.log("outside redirect if statement");
-                        console.log("user match is " + user.match);
-                        if (user.match) {
-                            console.log("inside redirect if statement");
-                            console.log("user match is " + user.match);
-                            user.match = false;
-                            this.setRedirect();
-                            this.renderRedirect();
-                        }
-                        console.log("password is in correct format and password field is not empty.");*/
-            //this.setRedirect();
-            //this.renderRedirect();
         }
-        //     Axios.get('/api/allusers').then(req,res);
-        //     console.log("this is db results");
-        //     console.log(res);
-
-        // } else {
-        //     console.log("e-mail empty");
-        // }
     }
 
     ValidateEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         return re.test(String(this.state.email).toLowerCase());
-    }
-
-    handleMaskedPassword = event => {
-        const generateMask = () => {
-            if (this.state.password) {
-                const lengthOfMask = this.state.password.length;
-                let mask = "";
-                for (let i = 0; i < lengthOfMask; i++) {
-                    mask += "*";
-                }
-
-                return mask;
-            }
-
-            return "";
-
-        }
-
-        const passwordTracker = () => {
-            let letter = this.state.password.split("");
-            letter = letter[letter.length - 1];
-            console.log("password tracker, letter: ", letter);
-            let hidden = this.state.hiddenPassword.slice();
-
-            hidden.push(letter);
-            return hidden;
-        }
-
-        const { name, value } = event.target;
-
-        console.log("inside handle password, name: ", name);
-        console.log("inside handle password, value: ", value);
-
-        this.setState({
-            [name]: value,
-            maskPassword: generateMask(),
-            hiddenPassword: passwordTracker()
-        })
-
-
     }
 
     componentDidUpdate() {
@@ -258,7 +153,6 @@ class Enter extends Component {
         return (
             <div className="App">
                 <EnterNav />
-
                 {this.renderRedirect()}
                 <div className='container'>
                     <AvForm>
@@ -266,7 +160,7 @@ class Enter extends Component {
                             email: { value: true, errorMessage: 'Please enter valid e-mail' },
                             required: { value: true, errorMessage: 'Please enter e-mail' }
                         }} />
-                        <AvField name="password" type = "password" label="Password" value={this.state.handleInputChange} onChange={this.handleInputChange} validate={{
+                        <AvField name="password" type="password" label="Password" value={this.state.handleInputChange} onChange={this.handleInputChange} validate={{
                             required: { value: true, errorMessage: 'Please enter password' },
                             pattern: { value: '^[A-Za-z0-9]+$', errorMessage: 'Your password must be composed only with letter and numbers' },
                             minLength: { value: 6, errorMessage: 'Your password must be between 6 and 16 characters' },
@@ -283,19 +177,6 @@ class Enter extends Component {
                         </ModalFooter>
                     </Modal>
                 </div>
-                {/*}
-        <div className='container'>
-          <form />
-            <div className="form-group" />
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" onChange={this.handleInputChange} />
-              <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-            <div className="form-group" />
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" onChange={this.handleInputChange} />
-            <div class="form-group form-check" />
-              <button type="submit" class="btn btn-primary" onClick={this.handleFormSubmit}>Submit</button>
-                </div>*/}
             </div>
         )
     }
