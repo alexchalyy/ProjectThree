@@ -1,18 +1,8 @@
 {
-<<<<<<< HEAD
+ 
     "development": {
-<<<<<<< HEAD
     "username": "trilogy",
     "password": "password123",
-=======
-    "username": "trilogy-2",
-    "password": "david123",
-=======
-  "development": {
-    "username": "root",
-    "password": "password123",
->>>>>>> 4f887e88b9bf2bf85973942e6b498524ee8743d8
->>>>>>> 85903d10aa1d9441706cc70018b2eecf11329746
     "database": "UserDb",
     "host": "localhost",
     "dialect": "mysql"
