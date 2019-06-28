@@ -9,6 +9,7 @@ import { Button } from 'reactstrap';
 import { register } from '../components/UserFunction';
 import "../Register.css"
 import moment from 'moment';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class Register extends Component {
 	constructor() {
@@ -162,14 +163,21 @@ class Register extends Component {
                                     maxLength: { value: 16, errorMessage: 'Your name must be between 6 and 16 characters' },
                                     match: { value: 'password', errorMessage: 'Passwords must match' }
                                 }}
-
                             />
                         </div>
                         <Button className="submit-btn" color="secondary" onClick={this.handleFormSubmit}>Submit</Button>
 
                     </AvForm>
                 </div>
-               
+                <div>
+                    <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} onClosed={this.state.closeAll ? this.toggle : undefined}>
+                        <ModalHeader>E-mail already in use</ModalHeader>
+                        <ModalFooter>
+                            <Button color="secondary" onClick={this.toggleAll}>Close</Button>
+                        </ModalFooter>
+                    </Modal>
+                </div>
+
             </div>
         );
     }

@@ -153,13 +153,12 @@ class Account extends Component {
 
     render() {
         return (
-            <div id="reg-body">
+            <div id="account-body">
                 <EditNav />
-                <div className="container">
-
-                    <p id="reg-title">Edit Account Info</p>
+                <div className="account-container">
+                    <p id="account-title">Edit Account Info</p>
                     <AvForm>
-                        <div className="reg-box1">
+                        <div className="account-box1">
                             <AvField
                                 name="userName"
                                 placeholder="username"
@@ -202,6 +201,7 @@ class Account extends Component {
                             <AvField
                                 name="password"
                                 placeholder="password"
+                                type = "password"
                                 value={this.state.password}
                                 onChange={this.handleInputChange}
                                 validate={{
@@ -213,6 +213,7 @@ class Account extends Component {
                             />
                             <AvField
                                 name="confirm_password"
+                                type = "password"
                                 placeholder="confirm_password"
                                 onChange={this.handleInputChange}
                                 validate={{
@@ -225,7 +226,7 @@ class Account extends Component {
 
                             />
                         </div>
-                        <div className="reg-box2">
+                        <div className="account-box2">
                             <AvField
                                 name="address"
                                 placeholder="address"

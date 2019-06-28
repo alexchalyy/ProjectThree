@@ -7,10 +7,14 @@
 
 }
 
+#test {
+    color:red;
+}
+
 .reg-container {
-    border: 1px solid black;
-    border-radius: .25rem;
-    background: rgb(255,255,255,.8);
+    /* border: 1px solid black; */
+    /* background: rgb(255,255,255,.8); */
+    background:rgb(255,246,215,.8); 
     padding: 1rem;
     text-align: center;
     margin: 0 auto;
@@ -23,19 +27,13 @@
 }
 
 .input-box{
-    width: 225%;
+    width: 90%;
 }
 
 .reg-box1 {
-  width: 75%;
+  width: 100vw;
 
 }
-
-/* .reg-box2 {
-    margin: -5rem auto;
-    width: 100vw;
-    height: auto;
-} */
 
 .submit-btn {
     margin: 0 auto;
@@ -51,17 +49,20 @@
         background-size: cover;
     
     }
-
+   
     .reg-container {
-      width: 70%;
-      text-align: center;
-      margin: 1rem auto;
+        border-radius: 1rem;
+        width: 70%;
+        text-align: center;
+        margin: 5rem auto;
     }
 
     .reg-box1 {
-        width: 75%;
+        width: 100%;
         margin: 1rem auto;
         padding: 1rem;
+        font-family: 'Cinzel Decorative', cursive;
+        font-weight: 950;
     }
   
     .submit-btn {
