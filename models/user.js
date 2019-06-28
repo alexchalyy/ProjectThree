@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     password: DataTypes.STRING,
-    confirm_password: DataTypes.STRING,
+ 
     email: DataTypes.STRING,
     address: DataTypes.STRING,
     city: DataTypes.STRING,
@@ -27,10 +27,10 @@ module.exports = function(sequelize, DataTypes) {
     swag5name: { type: DataTypes.STRING, defaultValue: "Swag 5"},
     swag5quantity: { type: DataTypes.INTEGER, defaultValue: 0 }
   });
-  User.beforeCreate((user, options) => {
-    const salt = bcrypt.genSaltSync();
-    user.password = bcrypt.hashSync(user.password, salt);
-    user.confirm_password = bcrypt.hashSync(user.confirm_password, salt);
-  });
+  // User.beforeCreate((user, options) => {
+  //   const salt = bcrypt.genSaltSync();
+  //   user.password = bcrypt.hashSync(user.password, salt);
+  //   // user.confirm_password = bcrypt.hashSync(user.confirm_password, salt);
+  // });
   return User;
 };

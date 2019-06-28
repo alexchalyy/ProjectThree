@@ -25,6 +25,7 @@ class Enter extends Component {
             [name]: value
         });
         console.log("value is " + value);
+        
         var credentials = [];
         Axios.get('/api/allusers')
             .then(function (response) {
