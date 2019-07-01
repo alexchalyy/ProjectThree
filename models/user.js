@@ -1,7 +1,10 @@
 //  This creates a new table to store orders.
 var bcrypt = require('bcrypt');
 
+
 module.exports = function(sequelize, DataTypes) {
+
+  /*
   var User = sequelize.define("Users", {
     userName: DataTypes.STRING,
     firstName: DataTypes.STRING,
@@ -37,10 +40,31 @@ module.exports = function(sequelize, DataTypes) {
     swag10name: { type: DataTypes.STRING, defaultValue: "Swag 10"},
     swag10quantity: { type: DataTypes.INTEGER, defaultValue: 0 }
   })
+  */
   // User.beforeCreate((user, options) => {
   //   const salt = bcrypt.genSaltSync();
   //   user.password = bcrypt.hashSync(user.password, salt);
   //   // user.confirm_password = bcrypt.hashSync(user.confirm_password, salt);
   // });
+
+var User = sequelize.define('User', {
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  firstName: {
+    type: DataTypes.STRING
+  },
+  lastName: {
+    type: DataTypes.STRING
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      len:[5,25]
+    }
+  }
+});
   return User;
 };
