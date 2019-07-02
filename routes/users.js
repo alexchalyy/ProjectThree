@@ -150,7 +150,7 @@ userRouter.post("/login", (req, res) => {
 })
 
 userRouter.get("/api/allusers", function (req, res) {
-    db.Users.findAll({}).then(function (dbUsers) {
+    db.User.findAll({}).then(function (dbUsers) {
         res.json(dbUsers);
     });
 });

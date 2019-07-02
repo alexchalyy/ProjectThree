@@ -1,15 +1,8 @@
 {
   "development": {
-<<<<<<< HEAD
     "username": "user",
     "password": "password231",
      "database": "project3",
-=======
-    "username": "trilogy",
-    "password": "password123",
- 
-    "database": "UserDb",
->>>>>>> fbd4925a1152bfd4d9c282b61f020f300ebeead0
     "host": "localhost",
     "dialect": "mysql"
   }
