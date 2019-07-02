@@ -15,23 +15,26 @@ class SaleNav extends Component {
  
   componentDidMount() {
     // this.props.userData;
-   console.log( this.props.LoggedInUserData);
+
+   console.log(this.props.userData.userData);
+  //  var id= this.props.userData.userData.user.id;
 }
 
 Logout()  {
   var id;
 
   console.log("log out function called.");
-  axios.get('api/allusers')
+  axios.get('/api/allusers')
   .then(function (res) {
     //const firstName = firstName.res.data;
     //this.setState({ firstName });
-    var id;
+    var id= this.props.userData.userData.user.id;
     console.log("this is sale navigation bar.");
     for (var c = 0; c < res.data.length; c++) {
       if (res.data[c].isLoggedIn == 1)  {
         id = res.data[c].id;
         console.log("logged in id is " + id);
+      
         var url = "/api/logout/" + id;
         axios.put(url)
         .then(function(res) {
@@ -68,7 +71,7 @@ render()  {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <a className="nav-link sale-nav-link" href="*">Hello {this.props.userData}<span className="sr-only">(current)</span></a>
+              <a className="nav-link sale-nav-link" href="*">Welcome {this.props.userData.userData.user.userName}<span className="sr-only">(current)</span></a>
             </li>{/*{navbarImg}*/}
             <li className="nav-item">
               <a className="nav-link sale-nav-link" href="/account">Account</a>

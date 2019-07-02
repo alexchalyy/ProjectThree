@@ -9,6 +9,7 @@ import { Redirect } from 'react-router-dom';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import Axios from 'axios';
+import "../enter.css"
 //import UserExists from "../components/UserExists";
 
 class Enter extends Component {
@@ -159,34 +160,47 @@ class Enter extends Component {
 
     render() {
         return (
-            <div className="App">
+            <div className="enter-body">
                 <EnterNav />
 
                 {/* {this.renderRedirect()} */}
-                <div className='container'>
-                    <AvForm>
-                        <AvField name="email" label="Email" type="email" onChange={this.handleInputChange} validate={{
+                <div className='enter-container'>
+                    <p className="enter-title">Sign In</p>
+                    <AvForm className="enter-form">
+                        <AvField 
+                            name="email" 
+                            // label="Email"
+                            placeholder="email" 
+                            type="email" 
+                            onChange={this.handleInputChange} 
+                            validate={{
                             email: { value: true, errorMessage: 'Please enter valid e-mail' },
                             required: { value: true, errorMessage: 'Please enter e-mail' }
                         }} />
-                        <AvField name="password" type="password" label="Password" value={this.state.handleInputChange} onChange={this.handleInputChange} validate={{
+                        <AvField 
+                        name="password" 
+                        type="password" 
+                        // label="Password" 
+                        placeholder="password"
+                        value={this.state.handleInputChange} 
+                        onChange={this.handleInputChange} 
+                        validate={{
                             required: { value: true, errorMessage: 'Please enter password' },
                             pattern: { value: '^[A-Za-z0-9]+$', errorMessage: 'Your password must be composed only with letter and numbers' },
                             minLength: { value: 6, errorMessage: 'Your password must be between 6 and 16 characters' },
                             maxLength: { value: 16, errorMessage: 'Your password must be between 6 and 16 characters' }
                         }} />
-                        <Button color="primary" onClick={this.handleFormSubmit}>Submit</Button>
+                        <Button className="enter-btn" onClick={this.handleFormSubmit}>Submit</Button>
                     </AvForm>
                 </div>
                 <div>
                     <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} onClosed={this.state.closeAll ? this.toggle : undefined}>
                         <ModalHeader>User not registered</ModalHeader>
                         <ModalFooter>
-                            <Button color="secondary" onClick={this.toggleAll}>Close</Button>
+                            <Button className="enter-btn" onClick={this.toggleAll}>Close</Button>
                         </ModalFooter>
                     </Modal>
                 </div>
-
             </div>
         )
     }

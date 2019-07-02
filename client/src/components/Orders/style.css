@@ -1,17 +1,30 @@
-.sale-body {
-    background: url("/images/gotmap.jpg");
+.outer-sale-wrap {
+    width: 95%;
+    margin: 0 auto;
     text-align: center;
 }
 
-.card {
-    width: 80vw;
+.sale-card-wrap {
+    width: 75%;
     margin: 0 auto;
+}
+
+.sale-card {
+    width: 25%;
+    height: 300px;
+    margin: .5rem;
+    float: left;
+    overflow: auto;
+
+}
+.sale-card::-webkit-scrollbar { 
+    width: 0 !important; 
 }
 
 .card-image{
     margin: 0 auto;
-    height: 100px;
-    width: 80px;
+    height: 150px;
+    width: 150px;
 }
 
 .card-title {
@@ -36,4 +49,8 @@
 
 }
 
+/* .img-thumbnail {
+    height: 250px;
+    width: 250px;
+} */
 

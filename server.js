@@ -11,6 +11,8 @@ const User = require('./models/user');
 const morgan = require('morgan');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const passport = require('./passport');
+ 
 
  
 // var app = express();
@@ -26,6 +28,10 @@ app.use(cookieParser());
 
 console.log("beginning of server");
 
+// Passport
+app.use(passport.initialize())
+app.use(passport.session()) // calls the deserializeUser
+
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -34,7 +40,34 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
+// Sessions might be needed but not sure of the rest
+
+app.use(session({
+  key: "user_sid",
+  secret: "puffanstuff",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+      expires: 600000
+  }
+}));
+
+//not sure if this code is needed, chris pick a direction and go there
+// app.use( (req, res, next) => {
+//   console.log('req.session', req.session);
+//   return next();
+// });
+
+// app.post('/user', (req, res) => {
+//   console.log('user signup');
+//   req.session.username = req.body.username;
+//   res.end()
+// })
+ 
+
 // Define Routes
+
+// app.use('/user', user) are these the same, sure looks like they are
 
 app.use('/', require('./routes/users'));
 

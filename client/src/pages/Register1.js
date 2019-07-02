@@ -1,44 +1,35 @@
 import axios from "axios";
-import EditNav from "../components/EditNav";
+import LogNav from "../components/LogNav";
 import { isAbsolute } from "path";
 import { Input, TextArea, FormBtn } from "../components/Form";
 import { Link, Redirect } from "react-router-dom";
 import React, { Component } from "react";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Button } from 'reactstrap';
-
-import "../Account.css"
+import { register } from '../components/UserFunction';
+import "../Register.css"
 import moment from 'moment';
-//update user data
 
-class Account extends Component {
-    constructor() {
-        super()
-        this.state = {
+// const User = require('../models/User');
+// const Users= require( "../routes/users");
+class Register extends Component {
+	constructor() {
+		super()
+		this.state = {
+            userName: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            confirm_password: "",
+            redirect: false
 
-            userName: "Not Logged in",
-            address: "",
-            city: "",
-            state: "",
-            zip: "",
-            creditCardNumber: "",
-            expDate: "",
-            cvv: ""
-            // redirect: false
-        }
+		}
+		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleChange = this.handleChange.bind(this)
+	}
+ 
 
-
-    }
-
-
-
-
-    // setRedirect = () => {
-    //     this.setState({
-    //         redirect: true
-    //     }, () =>  this.renderRedirect())
-
-    // }
     handleInputChange = event => {
 
         const { name, value } = event.target;
@@ -46,162 +37,178 @@ class Account extends Component {
             [name]: value
         });
         console.log("value is " + value);
+
     }
+    
+    sendUser = event => {
+     
+        const user = {
+            userName: this.state.userName,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            password: this.state.password,
+            confirm_password: this.state.confirm_password
 
-    // renderRedirect = () => {
-    //     console.log("redirect works!");
+        }
+        axios.post('api/users', user)
+            .then(function (response) {
+                console.log("inside db registration post call");
+                console.log(response);
 
-
-    //         return <Redirect to='/sale' />
-
-    // }
-    //add functionality where it send the data to the Database
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        this.props.history.push('/sale');
+    }
     handleFormSubmit = event => {
 
         const user = {
+            userName: this.state.userName,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            password: this.state.password,
+            confirm_password: this.state.confirm_password
 
-            address: this.state.address,
-            city: this.state.city,
-            state: this.state.state,
-            zip: this.state.zip,
-            creditCardNumber: this.state.creditCardNumber,
-            expDate: this.state.expDate,
-            cvv: this.state.cvv
         }
-        console.log(user);
-        console.log(user.userName);
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-        if (
-            user.address && user.city && user.state && this.ValidateZip() && this.ValidateCCNumber() &&
-            this.ValidateDate() && (/^[0-9]+$/.test(user.cvv) && user.cvv.length == 3) &&
-            this.state.password == this.state.confirm_password && /^[a-zA-Z]+$/.test(user.firstName) &&
+        var ValidateEmail = re.test(String(user.email).toLowerCase());
+        console.log("checking for user email " + user.email);
+        // Return today's date and time
+        // var currentTime = new Date();
+        // returns the month (from 0 to 11)
+        // var month = currentTime.getMonth() + 1;
+        // returns the year (four digits)
+        // var year = currentTime.getFullYear();
+        // var expired = false;
+
+        // if (user.expDate.length > 4) {
+        //     var enteredyear = user.expDate[3] + user.expDate[4];
+        //     var intyear = parseInt(enteredyear, 10) + 2000;
+        //     var enteredmonth = user.expDate[0] + user.expDate[1];
+        //     var intmonth = parseInt(enteredmonth, 10);
+        //     if ((year > intyear) || (year == intyear && month > intmonth)) {
+        //         expired = true;
+        //     }
+        // } else {
+        //     expired = true;
+        // }
+        //homemade validation, like gramma used to make
+        // var ValidateDate = (moment(user.expDate, 'MM/YY', true).isValid() && !expired);
+        // var number = /^[0-9]+$/;
+        // var ValidateCCNumber = (number.test(user.creditCardNumber) && user.creditCardNumber.length == 16);
+        // var ValidateZip = (number.test(user.zip) && user.zip > 9999);
+        var letter = /^[a-zA-Z0-9]+$/;
+        var ValidatePassword = letter.test(user.password); //match a letter _and_ a number
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var ValidateEmail = re.test(String(user.email).toLowerCase());
+        // console.log("Could this be true? " + (user.userName && user.firstName && user.lastName && ValidateEmail && ValidatePassword &&
+        //     user.address && user.city && user.state && ValidateZip && ValidateCCNumber &&
+        //     ValidateDate && (/^[0-9]+$/.test(user.cvv) && user.cvv.length == 3) &&
+        //     user.password == user.confirm_password && /^[a-zA-Z]+$/.test(user.firstName) &&
+        //     /^[a-zA-Z]+$/.test(user.lastName)));
+
+        // user.address && user.city && user.state && ValidateZip && ValidateCCNumber &&
+        // ValidateDate && (/^[0-9]+$/.test(user.cvv) && user.cvv.length == 3
+       
+        if (user.userName && user.firstName && user.lastName && ValidateEmail && ValidatePassword &&
+            user.password == user.confirm_password && /^[a-zA-Z]+$/.test(user.firstName) &&
             /^[a-zA-Z]+$/.test(user.lastName)) {
-            axios.put('api/users', user)
-                .then(function (response) {
-                    console.log(response);
+                var _this = this;
+            axios.get('api/allusers', user)
+                .then((response)=> {
+                    const users = response.data;
+                    if (users.filter((currentUser) => currentUser.email === user.email).length > 0) {
+                        alert('That e-mail is already in use, please pick a different one');
+                    } else {
+                        alert('Sign up complete');
+                        _this.sendUser();
+                    }
+
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
-            this.props.history.push('/sale');
-        } else {
-            if (user.userName && user.firstName && user.lastName && this.ValidateEmail() && this.ValidatePassword() &&
-                user.address && user.city && user.state && this.ValidateZip() && this.ValidateCCNumber() &&
-                this.ValidateDate()) {
-
-                console.log("address is valid");
-                console.log("city is valid");
-                console.log("state is valid");
-                console.log("valid zip: " + this.ValidateZip());
-                console.log("zip is valid");
-                console.log("credit card valid: " + this.ValidateCCNumber());
-                console.log("Expiration date is valid: " + this.ValidateDate());
-                console.log("Is cvv an integer? " + /^[0-9]+$/.test(user.cvv));
-                //console.log("credit card number is valid");
-                console.log("wrong registration input");
-            }
+         
         }
+
+
+        // i need this to fire after axios post is called, but props is not seen in the axios call
         // this.props.history.push('/sale');
+
     }
 
     componentDidMount() {
-
-        this.setState({ userName: this.props.userData.userData.user.userName });
-        // console.log(this.props.userData.userData.user.userName);
-
-        axios.post('/login', {
-            email: this.state.email,
-            password: this.state.password
-        }).then((res) => {
-            console.log("axios post in account page");
-
-            console.log(res)
-            if (res.data.message) {
-                console.log("response message");
-                console.log(res.data.message);
-                console.log(res.data);
-
-                this.props.getLoggedInUser({
-
-                    userData: res.data
-                })
-
-            } else {
-                console.log('failed to load user data')
-
-            }
-        }).catch(error => {
-            console.log('Login error: ');
-            console.log(error);
-            console.log("response.data = ");
-            console.log(error.message);
-
-        })
         console.log("did mount");
     }
 
-    ValidateDate() {
+    // ValidateDate() {
 
-        // Return today's date and time
-        var currentTime = new Date();
-        // returns the month (from 0 to 11)
-        var month = currentTime.getMonth() + 1;
-        // returns the year (four digits)
-        var year = currentTime.getFullYear();
-        var expired = false;
+    //     // Return today's date and time
+    //     var currentTime = new Date();
+    //     // returns the month (from 0 to 11)
+    //     var month = currentTime.getMonth() + 1;
+    //     // returns the year (four digits)
+    //     var year = currentTime.getFullYear();
+    //     var expired = false;
 
-        if (this.state.expDate.length > 4) {
-            var enteredyear = this.state.expDate[3] + this.state.expDate[4];
-            var intyear = parseInt(enteredyear, 10) + 2000;
-            var enteredmonth = this.state.expDate[0] + this.state.expDate[1];
-            var intmonth = parseInt(enteredmonth, 10);
-            if ((year > intyear) || (year == intyear && month > intmonth)) {
-                expired = true;
-            }
-        } else {
-            expired = true;
-        }
-        return (moment(this.state.expDate, 'MM/YY', true).isValid() && !expired);
-    }
+    //     if (this.state.expDate.length > 4) {
+    //         var enteredyear = this.state.expDate[3] + this.state.expDate[4];
+    //         var intyear = parseInt(enteredyear, 10) + 2000;
+    //         var enteredmonth = this.state.expDate[0] + this.state.expDate[1];
+    //         var intmonth = parseInt(enteredmonth, 10);
+    //         if ((year > intyear) || (year == intyear && month > intmonth)) {
+    //             expired = true;
+    //         }
+    //     } else {
+    //         expired = true;
+    //     }
+    //     return (moment(this.state.expDate, 'MM/YY', true).isValid() && !expired);
+    // }
 
-    ValidateCCNumber() {
-        /*console.log("Is credit card number integer? " + Number.isInteger(this.state.creditCardNumber));
-        console.log("Is credit card number 16 digits? " + this.state.creditCardNumber > 999999999999999);
-        return (Number.isInteger(this.state.creditCardNumber) && this.state.creditCardNumber > 999999999999999);*/
-        var number = /^[0-9]+$/;
-        return (number.test(this.state.creditCardNumber) && this.state.creditCardNumber.length == 16);
-    }
+    // ValidateCCNumber() {
+    //     /*console.log("Is credit card number integer? " + Number.isInteger(this.state.creditCardNumber));
+    //     console.log("Is credit card number 16 digits? " + this.state.creditCardNumber > 999999999999999);
+    //     return (Number.isInteger(this.state.creditCardNumber) && this.state.creditCardNumber > 999999999999999);*/
+    //     var number = /^[0-9]+$/;
+    //     return (number.test(this.state.creditCardNumber) && this.state.creditCardNumber.length == 16);
+    // }
 
-    ValidateZip() {
-        //console.log(Number.isInteger(this.state.zip));
-        //console.log(this.state.zip);
-        //return (Number.isInteger(this.state.zip) && this.state.zip > 9999);
-        var number = /^[0-9]+$/;
-        return (number.test(this.state.zip) && this.state.zip > 9999);
-    }
+    // ValidateZip() {
+    //     //console.log(Number.isInteger(this.state.zip));
+    //     //console.log(this.state.zip);
+    //     //return (Number.isInteger(this.state.zip) && this.state.zip > 9999);
+    //     var number = /^[0-9]+$/;
+    //     return (number.test(this.state.zip) && this.state.zip > 9999);
+    // }
 
-    ValidatePassword() {
-        var letter = /^[a-zA-Z0-9]+$/;
-        var valid = letter.test(this.state.password); //match a letter _and_ a number
-        return valid;
-    }
+    // ValidatePassword() {
+    //     var letter = /^[a-zA-Z0-9]+$/;
+    //     var valid = letter.test(this.state.password); //match a letter _and_ a number
+    //     return valid;
+    // }
 
-    ValidateEmail() {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // ValidateEmail() {
+    //     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-        return re.test(String(this.state.email).toLowerCase());
-    }
+    //     return re.test(String(this.state.email).toLowerCase());
+    // }
 
     render() {
         return (
-            <div id="account-body">
-                <EditNav userData={this.state.userData} />
-                <div className="account-container">
-                    <p id="account-title">Edit Account Info</p>
-                    <p id="account-user">Welcome {this.state.userName}</p>
+            <div id="reg-body">
+                <LogNav />
+                <div className="reg-container">
+
+                    <p id="reg-title">Sign Up</p>
+                    {/* <div className="reg-box1"> */}
                     <AvForm>
-                        <div className="account-box1">
+                        <div className="reg-box1">
                             <AvField
+                                className="input-box"
                                 name="userName"
                                 placeholder="username"
                                 value={this.state.userName}
@@ -211,6 +218,7 @@ class Account extends Component {
                                 }}
                             />
                             <AvField
+                                className="input-box"
                                 name="firstName"
                                 placeholder="First Name"
                                 value={this.state.firstName}
@@ -221,6 +229,7 @@ class Account extends Component {
                                 }}
                             />
                             <AvField
+                                className="input-box"
                                 name="lastName"
                                 placeholder="Last Name"
                                 value={this.state.lastName}
@@ -231,6 +240,7 @@ class Account extends Component {
                                 }}
                             />
                             <AvField
+                                className="input-box"
                                 name="email"
                                 placeholder="e-mail"
                                 value={this.state.email}
@@ -241,9 +251,10 @@ class Account extends Component {
                                 }}
                             />
                             <AvField
+                                className="input-box"
+                                type="password"
                                 name="password"
                                 placeholder="password"
-                                type="password"
                                 value={this.state.password}
                                 onChange={this.handleInputChange}
                                 validate={{
@@ -254,9 +265,11 @@ class Account extends Component {
                                 }}
                             />
                             <AvField
-                                name="confirm_password"
+                                className="input-box"
                                 type="password"
+                                name="confirm_password"
                                 placeholder="confirm_password"
+                                value={this.state.confirm_password}
                                 onChange={this.handleInputChange}
                                 validate={{
                                     required: { value: true, errorMessage: 'Please enter password' },
@@ -268,7 +281,8 @@ class Account extends Component {
 
                             />
                         </div>
-                        <div className="account-box2">
+                       
+                        {/* <div className="reg-box2">
                             <AvField
                                 name="address"
                                 placeholder="address"
@@ -286,13 +300,13 @@ class Account extends Component {
                                 validate={{
                                     required: { value: true, errorMessage: 'Please enter city' }
                                 }}
-                            />
-                            {/* <AvField
+                            /> 
+                            <AvField
                             name="state"
                             placeholder="State"
                             value={this.state.state}
                             onChange={this.handleInputChange}
-                        /> */}
+                                />
                             <AvField
                                 type="select"
                                 name="state"
@@ -399,17 +413,15 @@ class Account extends Component {
                                     minLength: { value: 3, errorMessage: 'Please enter 3 digit cvv' },
                                     maxLength: { value: 3, errorMessage: 'Please enter 3 digit cvv' }
                                 }}
-                            />
-                        </div>
+                            /> */}
                         <Button className="submit-btn" color="secondary" onClick={this.handleFormSubmit}>Submit</Button>
+
                     </AvForm>
                 </div>
+               
             </div>
-
-
-
         );
     }
 }
 
-export default Account;
+export default Register;

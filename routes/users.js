@@ -1,3 +1,8 @@
+// const express = require('express')
+// // const router = express.Router()
+// const User = require('../database/models/user')
+const passport = require('../passport')
+
 const userRouter = require("express").Router();
 const { check, validationResult } = require('express-validator');
 var bcrypt = require('bcrypt');
@@ -131,6 +136,7 @@ userRouter.post("/login", (req, res) => {
                     console.log(user);
                 } else {
                     console.log("compareSync failed");
+                    alert("Something went wrong please try again");
                 }
             } else {
                 console.log("else no user");
@@ -217,19 +223,64 @@ userRouter.put("/login", (req, res) => {
 
 
 
-// res.send(req.body);
+//             })
+//             newUser.save((err, savedUser) => {
+//                 if (err) return res.json(err)
+//                 res.json(savedUser)
+//             })
+//         }
+//     })
+// })
+/*
+userRouter.post(
+    '/login',
+    function (req, res, next) {
+        console.log('routes/user.js, login, req.body: ');
+        console.log(req.body)
+        next()
+    },
+    passport.authenticate('local'),
+    (req, res) => {
+        console.log('logged in', req.user);
+        var userInfo = {
+            username: req.user.username
+        };
+        res.send(userInfo);
+    }
+)
+
+userRouter.get('/', (req, res, next) => {
+    console.log('===== user!!======')
+    console.log(req.user)
+    if (req.user) {
+        res.json({ user: req.user })
+    } else {
+        res.json({ user: null })
+    }
+})
+
+userRouter.post('/logout', (req, res) => {
+    if (req.user) {
+        req.logout()
+        res.send({ msg: 'logging out' })
+    } else {
+        res.send({ msg: 'no user to log out' })
+    }
+})
 
 
-// userRouter.route("/users")
-//   .get(userController.findAll)
-//   .post(userController.create);
 
-// userRouter.route("/users/:id")
-//   .get(userController.findOne)
-//   .delete(userController.delete);
+    db.Users.create(req.body).then(function (dbUsers) {
+        res.json(dbUsers);
+    });
+ //res.send(req.body);
+//});
 
-
-
-
-
+userRouter.get("/api/allusers", function (req, res) {
+    db.Users.findAll({}).then(function (dbUsers) {
+        res.json(dbUsers);
+    });
+});
+*/
+ 
 module.exports = userRouter;

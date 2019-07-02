@@ -6,7 +6,7 @@ import {
   CardTitle, CardSubtitle, Button
 } from 'reactstrap';
 import SaleNav from '../SaleNav'
-import { Redirect,  withRouter  } from 'react-router-dom';
+
 import hand from './hand.PNG';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import "./style.css";
@@ -100,53 +100,15 @@ class SaleCard extends Component {
         console.log(error);
       });*/
 
+
+
+
     // this.props.history.push('/orders');
 
- 
 
-    }
-
-   
-// render() {
-//   const imageStyle = {
-//     margin: "0 auto"
-//   }
-
-//   return (
-   
-
-  // <div className="sale-body">
-  //   <div className='card-container'>
-  //   <div className="row no-gutters">
-  //     <div className="card mb-3">
-  //         {/* <div className="row no-gutters"> */}
-  //           {/* <div className="col-md-4 row align-itmes-center justify-content-center"> */}
-  //             <img src={this.props.image} className=' col-md-4 align-itmes-center justify-content-center mt-5 card-image' />
-  //           {/* </div> */}
-  //           <div className="col-md-8">
-  //             <div className="card-body">
-  //               <h5 className="card-title">{this.props.name}</h5>
-  //               <p className="card-desc">{this.props.description}</p>
-  //               <p className="card-price">{this.props.price}</p>
-  //               <div className="card-btn">
-  //                 <button className='btn btn-outline-dark'>Buy this item</button>
-  //               </div>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div> 
-        //  bootstrap card
- 
-    // )
-
-  // }
+  }
 
   componentDidMount() {
-    console.log("inside sales card index.js");
-    console.log( this.props.userData.userData);
-
     const that = this;
     console.log("this is sale card");
     axios.get('/api/allusers')
@@ -159,9 +121,7 @@ class SaleCard extends Component {
             console.log("that.state.email is " + that.state.email);
             console.log("res.data[" + c + "].email is " + res.data[c].email);
             that.setState({
-  
-              email: this.props.userData.userData.user.email
-              // email: res.data[c].email
+              email: res.data[c].email
             });
             that.setState({
               swag1quantity: res.data[c].swag1quantity
@@ -291,9 +251,7 @@ class SaleCard extends Component {
       swag9quantity: that.state.swag9quantity,
       //swag10name: this.state.swag10name,
       swag10quantity: that.state.swag10quantity,
-      
-      email:this.props.userData.userData.user.email
-      // email: that.state.email
+      email: that.state.email
       //user
     }
     console.log(user);
@@ -301,10 +259,7 @@ class SaleCard extends Component {
     axios.put("/api/buy", user)
       .then(function (response) {
         console.log(response);
-        
-        alert("Item was added to cart");
-        this.props.history.push('/sale');
-        // window.location.reload();
+        window.location.reload();
       })
       .catch(function (error) {
         console.log(error);
@@ -312,17 +267,13 @@ class SaleCard extends Component {
   }
 
   render() {
-    const imageStyle = {
-      margin: "0 auto",
-      padding: "1rem"
-    }
     return (
-      <div className="sale-body">
+      <div>
         <div className='container-fluid'>
           <div className="card mb-3">
             <div className="row no-gutters">
               {/* <div className="col-md-4 row align-itmes-center justify-content-center"> */}
-              <img src={this.props.image} className='col-md-4 row align-itmes-center justify-content-center' style={imageStyle} />
+              <img src={this.props.image} className='img-thumbnail col-md-4 row align-itmes-center justify-content-center' />
               {/* </div> */}
               <div className="col-md-8">
                 <div className="card-body">
@@ -332,7 +283,6 @@ class SaleCard extends Component {
                   <div className="card-btn">
                     <button className='btn btn-outline-dark' onClick={this.buyItem} itemid={this.props.index}>Buy this item</button>
                   </div>
-{/* >>>>>>> defc03bd081bde28a963379ae007c6c428ddf0c0 */}
                 </div>
               </div>
               {/* <div className="col-md-2 row align-items-center justify-content-center">
@@ -343,13 +293,13 @@ class SaleCard extends Component {
           </div>
         </div>
       </div>
-
     );
   }
+
 };
 // Render page
 
 
 
-export default withRouter(SaleCard);
- 
+
+export default SaleCard;
