@@ -16,7 +16,7 @@
 
 .account-container {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     text-align: center;
     background:rgb(255,246,215,.8);
     padding: 1rem;
@@ -60,13 +60,17 @@
 
     #account-title {
         text-align: center;
-        font-size: 3rem;
+        font-size: 2.5rem;
+    }
+
+    .account-user {
+        font-size: 1.75rem;
     }
 
     .account-box1 {
         display: block;
         float: left;
-        width: 100%;
+        width: 40%;
         margin: 2rem;
         font-family: 'Cinzel Decorative', cursive;
     }
