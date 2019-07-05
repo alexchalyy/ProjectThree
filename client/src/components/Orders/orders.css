@@ -3,15 +3,40 @@
   src: url("../../css/Game\ of\ Thrones.ttf");
 }
 
-body {
-  width: 100vw;
-  /* background: url('/images/throne.jpg'); */
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: fixed;
+.order-container {
+  /* background: url("/images/rocky-shore.jpg") */
+  background: rgb(40,40,40);
 }
-.container {
-  background-color: rgba(255,255,255,.7);
-  padding: .5rem;
+
+.order-container {
+  text-align: center;
 }
+
+.order-headline {
+  margin: 2rem auto;
+
+}
+
+.order-quantity {
+  font-family: 'Cinzel Decorative', cursive;
+}
+
+.order-img {
+  margin: 0 auto;
+  padding:1rem;
+  height: 250px;
+  width: 250px;
+}
+
+.order-title {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.order-desc {
+  font-size: .75rem;
+  text-align: center;
+  font-family: 'Cinzel Decorative', cursive;
+}
+
 

@@ -1,0 +1,15 @@
+Things to do:
+
+2. Orders background.
+
+3. Order card styling.
+
+4. Logout implemented on all pages.
+
+5. Code clean up.
+
+6. Update account route.
+
+7. Readme.
+
+8. Remove all false links.

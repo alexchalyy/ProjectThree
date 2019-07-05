@@ -2,113 +2,169 @@ Project Three Pseudocode:
 
 
 
+
+
 1. One dynamic react page:
 
    
+
+
 
 a.	When user opens the web-site, he/she is navigated to log in page, with "Got Swag?" title DONE
 
    
 
+
+
 b.      It has two buttons:
+
+	
 
 	
 
 	i.  Log in.
 
-	    -	When user clicks it, he/she is asked (through dynamic react element) to enter user name and password in two seperate text boxes and click on "Enter" button.
+	    
+
+	-	When user clicks it, he/she is asked (through dynamic react element) to enter user name and password in two seperate text boxes and click on "Enter" button.
+
 
 		
 
-				If the user enters either wrong/blank username/password and clicks enter, "Invalid username/password" declination message is displayed.
+				
+		If the user enters either wrong/blank username/password and clicks enter, "Invalid username/password" declination message is displayed.
 
 		
 
-				If the user enters correct username/password and clicks enter (exists in user table), user is navigated to new page including:
+				
+
+		If the user enters correct username/password and clicks enter (exists in user table), user is navigated to new page including:
 
 		
 
-			    -	Hello "username" (header)
+			    
+
+		-	Hello "username" (header)
 
 		
 
-			    -	User account button (header)
+			    
+
+		-	User account button (header)
 
 		
 
-			    -	Orders button (header)
+			    
+
+		-	Orders button (header)
 
 		
 
-			    - 	Log out button
+			    
+
+		- 	Log out button
 
 		
 
-			    -	Items for Sale
+			    
+
+		-	Items for Sale
 
 			
 
-				Under this section, there are several game of thrones souvenirs displayed including picture, name, description, price, and purchase button.
+				
+
+			Under this section, there are several game of thrones souvenirs displayed including picture, name, description, price, and purchase button.
+
+
+
+			If purchase button is clicked:
 
 			
 
-				If purchase button is clicked:
+				
+
+			-	New orders page is opened with the following elements.
 
 			
 
-				-	New orders page is opened with the following elements.
+				
+
+			-	The purchased item (as it appeared on last page) is prepended to the purchased items section.
 
 			
 
-				-	The purchased item (as it appeared on last page) is prepended to the purchased items section.
+				
 
-			
-
-				-	Purchase is added to user table (count, price, name)
+			-	Purchase is added to user table (count, price, name)
 
 		
 
-			   If the user clicks on orders button (steps above are repeated, except no sale item is prepended to the next page or added to db Users table).
+			   
+
+		If the user clicks on orders button (steps above are repeated, except no sale item is prepended to the next page or added to db Users table).
 
 		
 
-			   If the user clicks on user account button steps below are performed (ii. Register - except all the text boxes have correct values).
+			   
+
+		If the user clicks on user account button steps below are performed (ii. Register - except all the text boxes have correct values).
 
 		
 
-			   If the user clicks on log-out button, home page is opened.
+			   
+
+		If the user clicks on log-out button, home page is opened.
 
 	
 
-	Forgot password.
+	
+
+		Forgot password.
 
 	   
 
-	- If the button is clicked, page with below information is displayed.
+	
+
+		- If the button is clicked, page with below information is displayed.
 
 	   
 
-	- e-mail text box
+	
+
+		- e-mail text box
 
 	   
 
-	- submit button
+	
+
+		- submit button
 
 	   
 
-	- "Please enter e-mail to reset your password" title is displayed
+	
+
+		- "Please enter e-mail to reset your password" title is displayed
 
 	   
 
-	- If the user does not enter valid e-mail and clicks submit, "Please enter valid e-mail" message is displayed
+	
+
+		- If the user does not enter valid e-mail and clicks submit, "Please enter valid e-mail" message is displayed
 
 	   
 
-	- If the user enters valid e-mail that is not in users table and clicks submit, "this user is not registered" message is displayed
+	
+
+		- If the user enters valid e-mail that is not in users table and clicks submit, "this user is not registered" message is displayed
 
 	   
 
-	- If the user enters valid e-mail that exists in users table, an e-mail is sent to that e-mail with link to correct user account page, when user opens it, he/she is navigated to correct user account page, where all the fields are filled out except the password fields, user is required to re-register the accout, and users table is appropriately updated.
+	
+
+		- If the user enters valid e-mail that exists in users table, an e-mail is sent to that e-mail with link to correct user account page, when user opens it, he/she is navigated to correct user account page, where all the fields are filled out except the password fields, user is required to re-register the accout, and users table is appropriately updated.
+
+	
 
 	
 
@@ -116,7 +172,11 @@ b.      It has two buttons:
 
 	    
 
+	
+
 	-	When user clicks on "Register" button, register page is opened with the following elements.
+
+		
 
 		
 
@@ -124,7 +184,11 @@ b.      It has two buttons:
 
 		
 
+		
+
 		- first name text box
+
+		
 
 		
 
@@ -132,7 +196,11 @@ b.      It has two buttons:
 
 		
 
+		
+
 		- e-mail textbox
+
+		
 
 		
 
@@ -140,7 +208,11 @@ b.      It has two buttons:
 
 		
 
+		
+
 		- zip code text box
+
+		
 
 		
 
@@ -148,7 +220,11 @@ b.      It has two buttons:
 
 		
 
+		
+
 		- city text box
+
+		
 
 		
 
@@ -156,7 +232,11 @@ b.      It has two buttons:
 
 		
 
+		
+
 		- confirm password text box
+
+		
 
 		
 
@@ -164,13 +244,21 @@ b.      It has two buttons:
 
 		
 
+		
+
 		- credit card expiration date text box
+
+		
 
 		
 
 		- credit card
 
+		
+
 		- cvv text box
+
+		
 
 		
 
@@ -178,39 +266,57 @@ b.      It has two buttons:
 
 	   
 
-	- If the user clicks on register button without filling all of the following text boxes, "Please fill out all text boxes" message appears DONE
+	
+
+		- If the user clicks on register button without filling all of the following text boxes, "Please fill out all text boxes" message appears DONE
 
 	   
 
-	- If the user clicks on register button and passwords are not the same, "Please enter the same passwords" message appears DONE
+	
+
+		- If the user clicks on register button and passwords are not the same, "Please enter the same passwords" message appears DONE
 
 	   
 
-	- If the user clicks on register button without entering valid e-mail format, "Please enter valid e-mail" message appears DONE
+	
+
+		- If the user clicks on register button without entering valid e-mail format, "Please enter valid e-mail" message appears DONE
 
 	   
 
-	- If the user clicks on register button without entering 16 digit credit card number, "Please enter valid credit card number" message appears DONE
+	
+
+		- If the user clicks on register button without entering 16 digit credit card number, "Please enter valid credit card number" message appears DONE
 
 	   
 
-	- If the user clicks on register button without entering valid date format or date in the past, "Please enter valid date" message appears DONE
+	
+
+		- If the user clicks on register button without entering valid date format or date in the past, "Please enter valid date" message appears DONE
 
 	   
 
-	- If the user clicks on register button without entering valid 3 digit credit card security code, "Please enter valid cvv" message appears DONE
+	
+
+		- If the user clicks on register button without entering valid 3 digit credit card security code, "Please enter valid cvv" message appears DONE
 
 	   
 
-	- If the user enters username that is already in user table, a message stating "this user already exists" message is displayed.
+	
+
+		- If the user enters username that is already in user table, a message stating "this user already exists" message is displayed.
 
 	   
 
-	- If the user enters otherwise correct data, new user is added to users table with all the information above, user is navigated to sale page. DONE
+	
+
+		- If the user enters otherwise correct data, new user is added to users table with all the information above, user is navigated to sale page. DONE
 
 	   
 
-	- User can update the information by entering new values and clicking "Register" button
+	
+
+		- User can update the information by entering new values and clicking "Register" button
 
 
 

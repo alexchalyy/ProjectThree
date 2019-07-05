@@ -2,7 +2,7 @@ import axios from "axios";
 import EditNav from "../components/EditNav";
 import { isAbsolute } from "path";
 import { Input, TextArea, FormBtn } from "../components/Form";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import React, { Component } from "react";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Button } from 'reactstrap';
@@ -12,8 +12,8 @@ import moment from 'moment';
 //update user data
 
 class Account extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
 
             userName: "Not Logged in",
@@ -23,7 +23,10 @@ class Account extends Component {
             zip: "",
             creditCardNumber: "",
             expDate: "",
-            cvv: ""
+            cvv: "",
+            loggedInUserName: "",
+            loggedInUserEmail: "",
+            loggedInUserId: ""
             // redirect: false
         }
 
@@ -59,7 +62,7 @@ class Account extends Component {
     handleFormSubmit = event => {
 
         const user = {
-
+            email: this.state.loggedInUserEmail,
             address: this.state.address,
             city: this.state.city,
             state: this.state.state,
@@ -69,75 +72,36 @@ class Account extends Component {
             cvv: this.state.cvv
         }
         console.log(user);
-        console.log(user.userName);
+
 
         if (
             user.address && user.city && user.state && this.ValidateZip() && this.ValidateCCNumber() &&
-            this.ValidateDate() && (/^[0-9]+$/.test(user.cvv) && user.cvv.length == 3) &&
-            this.state.password == this.state.confirm_password && /^[a-zA-Z]+$/.test(user.firstName) &&
-            /^[a-zA-Z]+$/.test(user.lastName)) {
-            axios.put('api/users', user)
+            this.ValidateDate() && (/^[0-9]+$/.test(user.cvv) && user.cvv.length == 3)
+        ) {
+            var _this = this;
+            axios.put("/api/account", user)
                 .then(function (response) {
                     console.log(response);
+
+                    //alert("Account was updated");
+                    _this.props.history.push('/sale');
+                    //  window.location.reload();
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
-            this.props.history.push('/sale');
-        } else {
-            if (user.userName && user.firstName && user.lastName && this.ValidateEmail() && this.ValidatePassword() &&
-                user.address && user.city && user.state && this.ValidateZip() && this.ValidateCCNumber() &&
-                this.ValidateDate()) {
 
-                console.log("address is valid");
-                console.log("city is valid");
-                console.log("state is valid");
-                console.log("valid zip: " + this.ValidateZip());
-                console.log("zip is valid");
-                console.log("credit card valid: " + this.ValidateCCNumber());
-                console.log("Expiration date is valid: " + this.ValidateDate());
-                console.log("Is cvv an integer? " + /^[0-9]+$/.test(user.cvv));
-                //console.log("credit card number is valid");
-                console.log("wrong registration input");
-            }
         }
         // this.props.history.push('/sale');
     }
 
     componentDidMount() {
-
-        this.setState({ userName: this.props.userData.userData.user.userName });
-        // console.log(this.props.userData.userData.user.userName);
-
-        axios.post('/login', {
-            email: this.state.email,
-            password: this.state.password
-        }).then((res) => {
-            console.log("axios post in account page");
-
-            console.log(res)
-            if (res.data.message) {
-                console.log("response message");
-                console.log(res.data.message);
-                console.log(res.data);
-
-                this.props.getLoggedInUser({
-
-                    userData: res.data
-                })
-
-            } else {
-                console.log('failed to load user data')
-
-            }
-        }).catch(error => {
-            console.log('Login error: ');
-            console.log(error);
-            console.log("response.data = ");
-            console.log(error.message);
-
-        })
-        console.log("did mount");
+        var loggedInUserName = localStorage.getItem('loggedInUserName');
+        var loggedInUserEmail = localStorage.getItem('loggedInUserEmail');
+        var loggedInUserId = localStorage.getItem('loggedInUserId');
+        this.setState({ loggedInUserName });
+        this.setState({ loggedInUserEmail });
+        this.setState({ loggedInUserId });
     }
 
     ValidateDate() {
@@ -197,77 +161,78 @@ class Account extends Component {
             <div id="account-body">
                 <EditNav userData={this.state.userData} />
                 <div className="account-container">
-                    <p id="account-title">Edit Account Info</p>
-                    <p id="account-user">Welcome {this.state.userName}</p>
-                    <AvForm>
-                        <div className="account-box1">
-                            <AvField
-                                name="userName"
-                                placeholder="username"
-                                value={this.state.userName}
-                                onChange={this.handleInputChange}
-                                validate={{
-                                    required: { value: true, errorMessage: 'Please enter user name' }
-                                }}
-                            />
-                            <AvField
-                                name="firstName"
-                                placeholder="First Name"
-                                value={this.state.firstName}
-                                onChange={this.handleInputChange}
-                                validate={{
-                                    required: { value: true, errorMessage: 'Please enter first name' },
-                                    pattern: { value: '^[A-Za-z]+$', errorMessage: 'Your name must be composed only with letters' }
-                                }}
-                            />
-                            <AvField
-                                name="lastName"
-                                placeholder="Last Name"
-                                value={this.state.lastName}
-                                onChange={this.handleInputChange}
-                                validate={{
-                                    required: { value: true, errorMessage: 'Please enter last name' },
-                                    pattern: { value: '^[A-Za-z]+$', errorMessage: 'Your name must be composed only with letters' }
-                                }}
-                            />
-                            <AvField
-                                name="email"
-                                placeholder="e-mail"
-                                value={this.state.email}
-                                onChange={this.handleInputChange}
-                                validate={{
-                                    email: { value: true, errorMessage: 'Please enter valid e-mail' },
-                                    required: { value: true, errorMessage: 'Please enter e-mail' }
-                                }}
-                            />
-                            <AvField
-                                name="password"
-                                placeholder="password"
-                                type="password"
-                                value={this.state.password}
-                                onChange={this.handleInputChange}
-                                validate={{
-                                    required: { value: true, errorMessage: 'Please enter password' },
-                                    pattern: { value: '^[A-Za-z0-9]+$', errorMessage: 'Your name must be composed only with letter and numbers' },
-                                    minLength: { value: 6, errorMessage: 'Your name must be between 6 and 16 characters' },
-                                    maxLength: { value: 16, errorMessage: 'Your name must be between 6 and 16 characters' }
-                                }}
-                            />
-                            <AvField
-                                name="confirm_password"
-                                type="password"
-                                placeholder="confirm_password"
-                                onChange={this.handleInputChange}
-                                validate={{
-                                    required: { value: true, errorMessage: 'Please enter password' },
-                                    pattern: { value: '^[A-Za-z0-9]+$', errorMessage: 'Your name must be composed only with letter and numbers' },
-                                    minLength: { value: 6, errorMessage: 'Your name must be between 6 and 16 characters' },
-                                    maxLength: { value: 16, errorMessage: 'Your name must be between 6 and 16 characters' },
-                                    match: { value: 'password', errorMessage: 'Passwords must match' }
-                                }}
+                    <p id="account-title">Edit Account Info For</p>
+                    <p>{this.state.loggedInUserName}</p>
+                    <div className="account-box1">{/*
+                        <AvField
+                            name="userName"
+                            placeholder="username"
+                            value={this.state.userName}
+                            onChange={this.handleInputChange}
+                            validate={{
+                                required: { value: true, errorMessage: 'Please enter user name' }
+                            }}
+                        />
+                        <AvField
+                            name="firstName"
+                            placeholder="First Name"
+                            value={this.state.firstName}
+                            onChange={this.handleInputChange}
+                            validate={{
+                                required: { value: true, errorMessage: 'Please enter first name' },
+                                pattern: { value: '^[A-Za-z]+$', errorMessage: 'Your name must be composed only with letters' }
+                            }}
+                        />
+                        <AvField
+                            name="lastName"
+                            placeholder="Last Name"
+                            value={this.state.lastName}
+                            onChange={this.handleInputChange}
+                            validate={{
+                                required: { value: true, errorMessage: 'Please enter last name' },
+                                pattern: { value: '^[A-Za-z]+$', errorMessage: 'Your name must be composed only with letters' }
+                            }}
+                        />
+                        <AvField
+                            name="email"
+                            placeholder="e-mail"
+                            value={this.state.email}
+                            onChange={this.handleInputChange}
+                            validate={{
+                                email: { value: true, errorMessage: 'Please enter valid e-mail' },
+                                required: { value: true, errorMessage: 'Please enter e-mail' }
+                            }}
+                        />
+                        <AvField
+                            name="password"
+                            placeholder="password"
+                            type="password"
+                            value={this.state.password}
+                            onChange={this.handleInputChange}
+                            validate={{
+                                required: { value: true, errorMessage: 'Please enter password' },
+                                pattern: { value: '^[A-Za-z0-9]+$', errorMessage: 'Your name must be composed only with letter and numbers' },
+                                minLength: { value: 6, errorMessage: 'Your name must be between 6 and 16 characters' },
+                                maxLength: { value: 16, errorMessage: 'Your name must be between 6 and 16 characters' }
+                            }}
+                        />
+                        <AvField
+                            name="confirm_password"
+                            type="password"
+                            placeholder="confirm_password"
+                            onChange={this.handleInputChange}
+                            validate={{
+                                required: { value: true, errorMessage: 'Please enter password' },
+                                pattern: { value: '^[A-Za-z0-9]+$', errorMessage: 'Your name must be composed only with letter and numbers' },
+                                minLength: { value: 6, errorMessage: 'Your name must be between 6 and 16 characters' },
+                                maxLength: { value: 16, errorMessage: 'Your name must be between 6 and 16 characters' },
+                                match: { value: 'password', errorMessage: 'Passwords must match' }
+                            }}
 
-                            />
-                        </div>
+                        />
+                        </div>*/}
+
+                    <AvForm>
                         <div className="account-box2">
                             <AvField
                                 name="address"
@@ -403,13 +368,10 @@ class Account extends Component {
                         </div>
                         <Button className="submit-btn" color="secondary" onClick={this.handleFormSubmit}>Submit</Button>
                     </AvForm>
+                    </div>
                 </div>
             </div>
-
-
-
         );
     }
 }
-
-export default Account;
+export default withRouter(Account);

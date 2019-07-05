@@ -17,8 +17,8 @@ class App extends Component {
     super()
     this.state = {
       username: null,
-      LoggedInUserData: false
-      // userData: false
+      LoggedInUserData: false,
+      userData: ""
        
        
     }
@@ -43,14 +43,24 @@ class App extends Component {
     
 
   }
+
+  populateStorage(userData) {
+   
+    
+  }
   //do axios call to get logged in user. and pass that object to other pages
   getLoggedInUser(userData) {
-
+  
+    localStorage.setItem('loggedInUserId', userData.user.id );
+    localStorage.setItem('loggedInUserEmail', userData.user.email );
+    localStorage.setItem('loggedInUserName', userData.user.userName );
+    // populateStorage(userData);
     this.setState({ userData });
     // this.setState({ LoggedInUserData: userData });
     // this.state.LoggedInUserData = userData;
     console.log("Hello user data");
     console.log(userData);
+
   }
 
   render() {
@@ -67,7 +77,7 @@ class App extends Component {
             {/* <Route exact path="/login" component={() => <Enter foo="bar" />} /> */}
             <Route path="/login" render={() => <Enter getLoggedInUser={this.getLoggedInUser} />} />
             <Route exact path="/forgot" component={Forgot} />
-            {/* <Route exact path="/sale" render={() => (this.state.userData.userData.user.isLoggedIn ? (<Sale userData={this.state.userData} />) : ( <Redirect to="/login"/>) )}/> */}
+            {/* <Route exact path="/sale" render={() => (this.state.userData.user.isLoggedIn ? (<Sale userData={this.state.userData} />) : ( <Redirect to="/login"/>) )}/> */}
             <Route exact path="/sale" component={() => <Sale userData={this.state.userData} />} /> 
               {/* <Route exact path="/sale" component={Sale} /> */}
             <Route exact path="/orders" component= {() => <Order userData={this.state.userData} />} />

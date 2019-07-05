@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import ReactDOM from 'react-dom';
 import { isAbsolute } from "path";
 import EnterNav from "../components/EnterNav";
 import { Link } from "react-router-dom";
 import { Input, TextArea, FormBtn } from "../components/Form";
-import { Redirect } from 'react-router-dom';
+
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import Axios from 'axios';
@@ -136,10 +136,7 @@ class Enter extends Component {
                     console.log(res.data.message);
                     console.log(res.data);
                     console.log('successful login')
-                    this.props.getLoggedInUser({
-                        
-                        userData: res.data
-                    })
+                    this.props.getLoggedInUser(res.data)
                     this.setRedirect();
                     this.updateIsLoggedIn();
 				} else {

@@ -14,6 +14,7 @@ class Sale extends Component {
   constructor() {
     super()
     this.state = {
+      userData:"Please log in",
       userName: "",
       firstName: "",
       lastName: "",
@@ -27,6 +28,7 @@ class Sale extends Component {
       expDate: 1,
       cvv: 4,
       item
+      
     }
   }
   componentWillReceiveProps() {
@@ -35,19 +37,30 @@ class Sale extends Component {
   }
   //testing sale page
   componentDidMount() {
-    if(!this.props.userData.userData.user.isLoggedIn){
-      this.props.history.push('/login');
-    }
+
+   
+    var loggedInUserName = localStorage.getItem('loggedInUserName');
+    var loggedInUserEmail = localStorage.getItem('loggedInUserEmail');
+    var loggedInUserId = localStorage.getItem('loggedInUserId');
+    
+    console.log(loggedInUserName);
+    console.log(loggedInUserEmail);
+    console.log(loggedInUserId);
+     
+    // this.setState({ userData: this.props.userData.userData.user.isLoggedIn });
+    // if(!this.props.userData.userData.user.isLoggedIn){
+    //   this.props.history.push('/login');
+    // }
     
     console.log("did mount");
     //  this.setState({ userName: this.props.userData.userName});
-    console.log(this.props.userData.userData);
-    var id = this.props.userData.userData.user.id;
-    console.log(id);
-    var userName = this.props.userData.userData.user.userName;
-    console.log(userName);
-    var email = this.props.userData.userData.user.email;
-    console.log(email);
+    // console.log(this.props.userData);
+    // var id = this.props.userData.user.id;
+    // console.log(id);
+    // var userName = this.props.userData.user.userName;
+    // console.log(userName);
+    // var email = this.props.userData.user.email;
+    // console.log(email);
 
     axios.get('api/allusers')
       .then(function (res) {
@@ -68,15 +81,15 @@ class Sale extends Component {
   }
 
   render() {
-    const background = {
-      background: 'rgb(52,58,64)'
-    }
+    // const background = {
+    //   background: 'rgb(52,58,64)'
+    // }
 
     console.log("before Log In function is called.");
 
 
     return (
-      <div className="App">
+      <div className="App sale-body">
         <SaleNav userData={this.props.userData}/>
         {/* <p>Welcome {this.state.userName}</p>
         <p>Sale page</p> */}
