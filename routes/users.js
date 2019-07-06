@@ -3,6 +3,9 @@
 // const User = require('../database/models/user')
 const passport = require('../passport');
 
+const express = require('express');
+const app = express();
+
 const userRouter = require("express").Router();
 const { check, validationResult } = require('express-validator');
 var bcrypt = require('bcrypt');
@@ -10,6 +13,12 @@ var bcrypt = require('bcrypt');
 const db = require('../models');
 // users.use(cors())
 process.env.SECRET_KEY = "secret";
+
+//Keith testing
+
+
+
+//-------------------------------
 
 userRouter.post("/api/users", (req, res) => {
 

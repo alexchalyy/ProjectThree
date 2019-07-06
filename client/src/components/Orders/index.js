@@ -138,7 +138,7 @@ class Orders extends Component {
 
   render() {
     return (
-      <div style={divStyle}>
+      <div>
         <OrderNav />
         <div className='container'>
           <h2 className='text-center' id="history">{/*Order History For {this.state.loggedInUserName}*/}</h2>

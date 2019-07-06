@@ -33,9 +33,15 @@ class Sale extends Component {
   
 render () {
 
+  const imgUrl = '/images/gotmap.jpg';
+
+  const divStyle = {
+      backgroundImage: 'url(' + imgUrl + ')',
+  };
+
   return (
-    <div style={styles.background} className="App orders-body">
-          <Orders/>          
+    <div className="App orders-body">
+          <Orders/>     
     </div>
   )};
   

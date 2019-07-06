@@ -1,11 +1,17 @@
 module.exports = function(sequelize, DataTypes) {
-  var Orders = sequelize.define('Orders', {
-    userID: {
-      type: DataTypes.INTEGER
-    },
+  var Order = sequelize.define('Order', {
+
     productID: {
       type: DataTypes.INTEGER
     }
   });
-  return Orders;
+
+  Order.associate = function(models) {
+    Order.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      }
+    })
+  }
+  return Order;
 }

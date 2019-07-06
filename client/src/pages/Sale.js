@@ -8,7 +8,6 @@ import { isAbsolute } from "path";
 import SaleNav from "../components/SaleNav";
 import SaleCard from "../components/SaleCard";
 import item from "../items.json";
-import db from '../../../models'
 //minor change for push update
 class Sale extends Component {
   constructor() {
@@ -93,16 +92,11 @@ class Sale extends Component {
         <SaleNav userData={this.props.userData}/>
         {/* <p>Welcome {this.state.userName}</p>
         <p>Sale page</p> */}
-        {this.db.Products.map(Products => (
+        {this.state.item.map(item => (
           <SaleCard
-<<<<<<< Updated upstream
             userData={this.props.userData}
             image={item.image}
             name={item.name}
-=======
-            //image={item.image}
-            name={Products.name}
->>>>>>> Stashed changes
             price={item.price}
             description={item.description}
             //index={item.index}

@@ -69,6 +69,8 @@ app.use(session({
 
 // app.use('/user', user) are these the same, sure looks like they are
 
+require("./routes/apiRoutes.js")(app);
+
 app.use('/', require('./routes/users'));
 
 // app.use('/api/auth', require('./routes/auth'));
@@ -86,5 +88,8 @@ db.sequelize.sync(syncOptions).then(function() {
     );
   });
 });
+
+
+
 
 console.log("works up till here");

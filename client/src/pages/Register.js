@@ -79,7 +79,7 @@ class Register extends Component {
         if (this.state.userName && this.state.firstName && this.state.lastName && ValidateEmail && ValidatePassword &&
             this.state.password == this.state.confirm_password && /^[a-zA-Z]+$/.test(this.state.firstName) &&
             /^[a-zA-Z]+$/.test(this.state.lastName)) {
-		axios.post('/register', {
+		axios.post('/create/users', {
             userName: this.state.userName,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
