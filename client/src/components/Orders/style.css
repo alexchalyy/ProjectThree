@@ -53,6 +53,10 @@
     text-align: center;
 }
 
+.container  {
+    padding-bottom: 1000px;
+}
+
 /* .img-thumbnail {
     height: 250px;
     width: 250px;
