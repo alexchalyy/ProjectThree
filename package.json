@@ -51,6 +51,6 @@
     "react-router-dom": "^5.0.1",
     "reactstrap": "^8.0.0",
     "sequelize": "^6.0.0",
-    "yarn": "^1.16.0"
+    "yarn": "^1.17.3"
   }
 }
