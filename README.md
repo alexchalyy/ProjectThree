@@ -36,7 +36,5 @@ Front end files were written using react, reactstrap, availity-reactstrap-valida
 
 # Back End
 
-Back end files were written using javascript, mysql, axios, node, and express. The website was deployed to Heroku server.
-
-https://gotswag.herokuapp.com
+Back end files were written using javascript, mysql, axios, node, and express.
 
